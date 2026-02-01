@@ -1,0 +1,2339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Bilingual Bruin | Dual Language Educational Resources</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ucla-blue: #2774AE;
+            --ucla-gold: #FFD100;
+            --dark-blue: #003B5C;
+            --light-gold: #FFE066;
+            --cream: #FFF9E6;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+            padding: 15px 40px;
+        }
+
+        .nav.scrolled {
+            background-color: var(--white);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-logo {
+            height: 60px;
+            width: auto;
+        }
+
+        .nav-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--white);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            transition: color 0.3s ease;
+        }
+
+        .nav.scrolled .nav-title {
+            color: var(--dark-blue);
+            text-shadow: none;
+        }
+
+        .nav-subtitle {
+            font-size: 11px;
+            color: var(--ucla-gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-link {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .nav.scrolled .nav-link {
+            color: var(--dark-blue);
+            text-shadow: none;
+        }
+
+        .nav-link.active {
+            font-weight: 700;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background-color: var(--ucla-gold);
+            border-radius: 2px;
+        }
+
+        /* Page sections */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--ucla-blue) 50%, var(--dark-blue) 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-glow-1 {
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            width: 400px;
+            height: 400px;
+            background-color: var(--ucla-gold);
+            border-radius: 50%;
+            opacity: 0.1;
+            filter: blur(80px);
+        }
+
+        .hero-glow-2 {
+            position: absolute;
+            bottom: 10%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+            background-color: var(--ucla-gold);
+            border-radius: 50%;
+            opacity: 0.15;
+            filter: blur(60px);
+        }
+
+        .paw-prints {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.1;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 40px 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-left {
+            animation: slideInLeft 1s ease;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background-color: var(--ucla-gold);
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-bottom: 25px;
+        }
+
+        .hero-badge span {
+            color: var(--dark-blue);
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .hero-title {
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        .hero-title-highlight {
+            color: var(--ucla-gold);
+            display: block;
+        }
+
+        .hero-description {
+            font-size: 20px;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            padding: 18px 40px;
+            background-color: var(--ucla-gold);
+            color: var(--dark-blue);
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255,209,0,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(255,209,0,0.4);
+        }
+
+        .btn-secondary {
+            padding: 18px 40px;
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .hero-right {
+            position: relative;
+            animation: slideInRight 1s ease;
+        }
+
+        .hero-card {
+            background-color: var(--white);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .stat-box:nth-child(odd) {
+            background-color: var(--cream);
+        }
+
+        .stat-box:nth-child(even) {
+            background-color: rgba(39,116,174,0.1);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--ucla-blue);
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--dark-blue);
+            font-weight: 500;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background-color: var(--cream);
+            border-radius: 15px;
+        }
+
+        .trust-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--ucla-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .trust-text strong {
+            display: block;
+            color: var(--dark-blue);
+        }
+
+        .trust-text span {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .hero-decoration {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 150px;
+            height: 150px;
+            background-color: var(--ucla-gold);
+            border-radius: 50%;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        /* Resources Page */
+        .resources-page {
+            min-height: 100vh;
+            background-color: var(--cream);
+            padding-top: 120px;
+        }
+
+        .resources-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background-color: rgba(39,116,174,0.15);
+            color: var(--ucla-blue);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-bar {
+            background-color: var(--white);
+            padding: 25px 35px;
+            border-radius: 20px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .search-input-wrapper {
+            flex: 2;
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 20px 18px 55px;
+            border: 2px solid rgba(39,116,174,0.2);
+            border-radius: 15px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--ucla-blue);
+        }
+
+        .search-select {
+            padding: 18px 25px;
+            border: 2px solid rgba(39,116,174,0.2);
+            border-radius: 15px;
+            font-size: 16px;
+            background-color: var(--white);
+            cursor: pointer;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .resource-card {
+            background-color: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .resource-image {
+            height: 180px;
+            background: linear-gradient(135deg, var(--ucla-blue) 0%, var(--dark-blue) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .resource-emoji {
+            font-size: 60px;
+            opacity: 0.9;
+        }
+
+        .resource-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .resource-badge.premium {
+            background-color: var(--ucla-gold);
+            color: var(--dark-blue);
+        }
+
+        .resource-badge.free {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .resource-content {
+            padding: 25px;
+        }
+
+        .resource-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .resource-grade {
+            background-color: rgba(39,116,174,0.15);
+            color: var(--ucla-blue);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .resource-rating {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .resource-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin-bottom: 10px;
+            line-height: 1.3;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .resource-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .resource-downloads {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .btn-preview {
+            background-color: var(--ucla-gold);
+            color: var(--dark-blue);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-preview:hover {
+            transform: translateY(-2px);
+        }
+
+        .resources-cta {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .btn-subscribe {
+            padding: 18px 50px;
+            background-color: var(--ucla-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(39,116,174,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-subscribe:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(39,116,174,0.4);
+        }
+
+        /* Subscribe Page */
+        .subscribe-page {
+            min-height: 100vh;
+            background: linear-gradient(180deg, var(--cream) 0%, var(--white) 100%);
+            padding-top: 120px;
+        }
+
+        .subscribe-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
+        }
+
+        .section-badge-gold {
+            display: inline-block;
+            background-color: var(--ucla-gold);
+            color: var(--dark-blue);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .plan-card {
+            background-color: var(--white);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border: 3px solid transparent;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .plan-card.popular {
+            box-shadow: 0 20px 60px rgba(39,116,174,0.25);
+            border-color: var(--ucla-gold);
+            transform: scale(1.05);
+        }
+
+        .plan-popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--ucla-gold);
+            color: var(--dark-blue);
+            padding: 8px 25px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .plan-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin-bottom: 10px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .plan-price {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--ucla-blue);
+            margin-bottom: 5px;
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .plan-price span {
+            font-size: 18px;
+            color: #999;
+            font-weight: 400;
+        }
+
+        .plan-billing {
+            color: #999;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .plan-feature {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-blue);
+        }
+
+        .plan-feature:last-child {
+            border-bottom: none;
+        }
+
+        .feature-check {
+            width: 24px;
+            height: 24px;
+            background-color: rgba(255,209,0,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .payment-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .payment-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-payment {
+            flex: 1;
+            padding: 15px;
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-payment:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-card {
+            background-color: var(--ucla-blue);
+        }
+
+        .btn-venmo {
+            background-color: #3D95CE;
+        }
+
+        .btn-apple {
+            background-color: #000;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            padding: 40px;
+            background-color: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+
+        .trust-badge-item {
+            text-align: center;
+        }
+
+        .trust-badge-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .trust-badge-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* About Page */
+        .about-page {
+            min-height: 100vh;
+            background-color: var(--white);
+            padding-top: 100px;
+        }
+
+        .about-hero {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--ucla-blue) 100%);
+            padding: 80px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-hero-decoration {
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%);
+            font-size: 200px;
+            opacity: 0.1;
+        }
+
+        .about-hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-title {
+            font-size: 56px;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .about-subtitle {
+            font-size: 22px;
+            color: var(--ucla-gold);
+            font-weight: 600;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .about-photo {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+        }
+
+        .about-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .about-stat {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 25px;
+            border-radius: 15px;
+        }
+
+        .about-stat:nth-child(odd) {
+            background-color: var(--cream);
+        }
+
+        .about-stat:nth-child(even) {
+            background-color: rgba(39,116,174,0.08);
+        }
+
+        .about-stat-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--ucla-gold);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .about-stat-label {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 3px;
+        }
+
+        .about-stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        .about-bio-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--dark-blue);
+            margin-bottom: 30px;
+        }
+
+        .about-bio p {
+            font-size: 18px;
+            color: #444;
+            line-height: 1.9;
+            margin-bottom: 25px;
+        }
+
+        .about-bio strong {
+            color: var(--ucla-blue);
+        }
+
+        .about-quote {
+            background-color: var(--cream);
+            padding: 30px;
+            border-radius: 20px;
+            border-left: 5px solid var(--ucla-gold);
+            margin: 40px 0;
+        }
+
+        .about-quote p {
+            font-size: 20px;
+            font-style: italic;
+            color: var(--dark-blue);
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        .about-quote cite {
+            display: block;
+            margin-top: 15px;
+            color: var(--ucla-blue);
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        .expertise-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .expertise-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background-color: rgba(39,116,174,0.08);
+            border-radius: 12px;
+        }
+
+        .expertise-check {
+            width: 28px;
+            height: 28px;
+            background-color: var(--ucla-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .expertise-item span {
+            font-weight: 500;
+            color: var(--dark-blue);
+        }
+
+        .about-cta {
+            background: linear-gradient(135deg, var(--ucla-gold) 0%, var(--light-gold) 100%);
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .about-cta h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+        }
+
+        .about-cta p {
+            font-size: 18px;
+            color: var(--dark-blue);
+            opacity: 0.8;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-dark {
+            padding: 20px 50px;
+            background-color: var(--dark-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,59,92,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-dark:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0,59,92,0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            padding: 60px 40px 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .footer-brand-name {
+            font-weight: 700;
+            font-size: 18px;
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .footer-brand-sub {
+            font-size: 12px;
+            color: var(--ucla-gold);
+        }
+
+        .footer-description {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.7;
+        }
+
+        .footer-title {
+            margin-bottom: 20px;
+            color: var(--ucla-gold);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+        }
+
+        .footer-link {
+            display: block;
+            margin-bottom: 12px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .footer-link:hover {
+            color: var(--white);
+        }
+
+        .footer-contact {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 12px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.7);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: auto;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 30px;
+        }
+
+        .modal-icon.blue {
+            background-color: var(--ucla-blue);
+        }
+
+        .modal-icon.venmo {
+            background-color: #3D95CE;
+        }
+
+        .modal-icon.black {
+            background-color: #000;
+        }
+
+        .modal-title {
+            color: var(--dark-blue);
+            margin-bottom: 8px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .modal-subtitle {
+            color: #666;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-blue);
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid rgba(39,116,174,0.2);
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--ucla-blue);
+            box-shadow: 0 0 0 4px rgba(39,116,174,0.15);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .form-row > div {
+            flex: 1;
+        }
+
+        .form-row > div.flex-2 {
+            flex: 2;
+        }
+
+        .form-info {
+            background-color: #E8F4FC;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .form-info p {
+            color: #3D95CE;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .form-info.dark {
+            background-color: #F5F5F7;
+        }
+
+        .form-info.dark p {
+            color: #1D1D1F;
+        }
+
+        .btn-form {
+            width: 100%;
+            padding: 16px;
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-form.blue {
+            background-color: var(--ucla-blue);
+        }
+
+        .btn-form.venmo {
+            background-color: #3D95CE;
+        }
+
+        .btn-form.black {
+            background-color: #000;
+        }
+
+        .btn-form:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card-option {
+            flex: 1;
+            padding: 20px;
+            border: 3px solid rgba(39,116,174,0.3);
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .card-option:hover, .card-option.selected {
+            border-color: var(--ucla-gold);
+            background-color: var(--cream);
+        }
+
+        .card-option-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .card-option span {
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+
+        .selected-card {
+            background-color: var(--cream);
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .selected-card span {
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+
+        .selected-card button {
+            background: none;
+            border: none;
+            color: var(--ucla-blue);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* 2FA Modal */
+        .twofa-options {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .twofa-option {
+            flex: 1;
+            padding: 30px 20px;
+            border: 3px solid rgba(39,116,174,0.3);
+            border-radius: 16px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .twofa-option:hover {
+            border-color: var(--ucla-gold);
+        }
+
+        .twofa-option-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .twofa-option h3 {
+            color: var(--dark-blue);
+            margin-bottom: 8px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .twofa-option p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Processing Modal */
+        .processing-content {
+            text-align: center;
+            padding: 60px;
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 6px solid rgba(39,116,174,0.2);
+            border-top-color: var(--ucla-blue);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        .processing-content h2 {
+            color: var(--dark-blue);
+            margin-bottom: 10px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .processing-content p {
+            color: #666;
+        }
+
+        .almost-emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .almost-highlight {
+            color: var(--ucla-blue);
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+        }
+
+        .success-icon span {
+            color: white;
+            font-size: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-left {
+                order: 1;
+            }
+
+            .hero-right {
+                order: 0;
+            }
+
+            .hero-description {
+                margin: 0 auto 40px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .resources-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .plan-card.popular {
+                transform: scale(1);
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 42px;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .trust-badges {
+                flex-wrap: wrap;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-content">
+            <a class="nav-brand" onclick="showPage('home')">
+                <img src="https://i.imgur.com/Dykfgx4.png" alt="A Bilingual Bruin Logo" class="nav-logo">
+                <div>
+                    <div class="nav-title">A Bilingual Bruin</div>
+                    <div class="nav-subtitle">Dual Language Resources</div>
+                </div>
+            </a>
+            <div class="nav-links">
+                <button class="nav-link active" data-page="home" onclick="showPage('home')">Home</button>
+                <button class="nav-link" data-page="resources" onclick="showPage('resources')">Resources</button>
+                <button class="nav-link" data-page="subscribe" onclick="showPage('subscribe')">Subscribe</button>
+                <button class="nav-link" data-page="about" onclick="showPage('about')">About</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <section class="page active" id="page-home">
+        <div class="hero">
+            <div class="hero-glow-1"></div>
+            <div class="hero-glow-2"></div>
+            <div class="paw-prints" style="top: 15%; right: 5%; transform: rotate(-20deg);">🐾</div>
+            <div class="paw-prints" style="top: 27%; right: 13%; transform: rotate(-10deg);">🐾</div>
+            <div class="paw-prints" style="top: 39%; right: 8%; transform: rotate(0deg);">🐾</div>
+            <div class="paw-prints" style="top: 51%; right: 16%; transform: rotate(10deg);">🐾</div>
+            <div class="paw-prints" style="top: 63%; right: 6%; transform: rotate(20deg);">🐾</div>
+            <div class="paw-prints" style="top: 75%; right: 14%; transform: rotate(30deg);">🐾</div>
+            
+            <div class="hero-container">
+                <div class="hero-left">
+                    <div class="hero-badge">
+                        <span>🎓 UCLA PROUD • EST. 2024</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Bilingual Education,
+                        <span class="hero-title-highlight">Brilliantly Delivered</span>
+                    </h1>
+                    <p class="hero-description">
+                        30+ years of educational excellence from a UCLA Spanish major, packed into ready-to-use 
+                        dual language resources. Empower your students with culturally rich, academically rigorous 
+                        curriculum materials created by a fluent Spanish speaker.
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="btn-primary" onclick="showPage('resources')">Explore Resources</button>
+                        <button class="btn-secondary" onclick="showPage('about')">Meet Mrs. Moss</button>
+                    </div>
+                </div>
+                <div class="hero-right">
+                    <div class="hero-card">
+                        <div class="hero-stats">
+                            <div class="stat-box">
+                                <div class="stat-number">500+</div>
+                                <div class="stat-label">Resources</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-number">30+</div>
+                                <div class="stat-label">Years Experience</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-number">10K+</div>
+                                <div class="stat-label">Students Impacted</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-number">100%</div>
+                                <div class="stat-label">Bilingual</div>
+                            </div>
+                        </div>
+                        <div class="trust-badge">
+                            <div class="trust-icon">⭐</div>
+                            <div class="trust-text">
+                                <strong>Trusted by Educators Statewide</strong>
+                                <span>Serving California's diverse classrooms</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-decoration"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Page -->
+    <section class="page" id="page-resources">
+        <div class="resources-page">
+            <div class="resources-container">
+                <div class="section-header">
+                    <span class="section-badge">📚 RESOURCE LIBRARY</span>
+                    <h2 class="section-title">Bilingual Teaching Resources</h2>
+                    <p class="section-description">
+                        Carefully crafted dual language materials designed by an educator with 30+ years of experience
+                    </p>
+                </div>
+
+                <div class="search-bar">
+                    <div class="search-input-wrapper">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" placeholder="Search bilingual resources...">
+                    </div>
+                    <select class="search-select">
+                        <option>All Grades</option>
+                        <option>Pre-K</option>
+                        <option>Kindergarten</option>
+                        <option>1st-2nd</option>
+                        <option>3rd-5th</option>
+                    </select>
+                    <select class="search-select">
+                        <option>All Subjects</option>
+                        <option>Reading/ELA</option>
+                        <option>Math</option>
+                        <option>Science</option>
+                        <option>Social Studies</option>
+                    </select>
+                </div>
+
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <span class="resource-emoji">📖</span>
+                            <span class="resource-badge premium">Premium</span>
+                        </div>
+                        <div class="resource-content">
+                            <div class="resource-meta">
+                                <span class="resource-grade">Grade K-2</span>
+                                <span class="resource-rating">⭐ 4.9</span>
+                            </div>
+                            <h3 class="resource-title">Spanish Sight Words Bundle</h3>
+                            <div class="resource-footer">
+                                <span class="resource-downloads">📥 2.4k downloads</span>
+                                <button class="btn-preview">Preview</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <span class="resource-emoji">🔢</span>
+                            <span class="resource-badge premium">Premium</span>
+                        </div>
+                        <div class="resource-content">
+                            <div class="resource-meta">
+                                <span class="resource-grade">Grade 1-3</span>
+                                <span class="resource-rating">⭐ 4.8</span>
+                            </div>
+                            <h3 class="resource-title">Bilingual Math Centers</h3>
+                            <div class="resource-footer">
+                                <span class="resource-downloads">📥 1.8k downloads</span>
+                                <button class="btn-preview">Preview</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <span class="resource-emoji">📚</span>
+                            <span class="resource-badge premium">Premium</span>
+                        </div>
+                        <div class="resource-content">
+                            <div class="resource-meta">
+                                <span class="resource-grade">Grade 2-4</span>
+                                <span class="resource-rating">⭐ 5.0</span>
+                            </div>
+                            <h3 class="resource-title">Dual Language Reading Passages</h3>
+                            <div class="resource-footer">
+                                <span class="resource-downloads">📥 3.1k downloads</span>
+                                <button class="btn-preview">Preview</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <span class="resource-emoji">🔤</span>
+                            <span class="resource-badge premium">Premium</span>
+                        </div>
+                        <div class="resource-content">
+                            <div class="resource-meta">
+                                <span class="resource-grade">Grade K-1</span>
+                                <span class="resource-rating">⭐ 4.9</span>
+                            </div>
+                            <h3 class="resource-title">Spanish Phonics Worksheets</h3>
+                            <div class="resource-footer">
+                                <span class="resource-downloads">📥 2.9k downloads</span>
+                                <button class="btn-preview">Preview</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <span class="resource-emoji">🔬</span>
+                            <span class="resource-badge premium">Premium</span>
+                        </div>
+                        <div class="resource-content">
+                            <div class="resource-meta">
+                                <span class="resource-grade">Grade 3-5</span>
+                                <span class="resource-rating">⭐ 4.7</span>
+                            </div>
+                            <h3 class="resource-title">Bilingual Science Units</h3>
+                            <div class="resource-footer">
+                                <span class="resource-downloads">📥 1.2k downloads</span>
+                                <button class="btn-preview">Preview</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <span class="resource-emoji">🌎</span>
+                            <span class="resource-badge free">Free</span>
+                        </div>
+                        <div class="resource-content">
+                            <div class="resource-meta">
+                                <span class="resource-grade">Grade K-5</span>
+                                <span class="resource-rating">⭐ 4.8</span>
+                            </div>
+                            <h3 class="resource-title">Cultural Heritage Projects</h3>
+                            <div class="resource-footer">
+                                <span class="resource-downloads">📥 890 downloads</span>
+                                <button class="btn-preview">Preview</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="resources-cta">
+                    <button class="btn-subscribe" onclick="showPage('subscribe')">Subscribe for Full Access →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscribe Page -->
+    <section class="page" id="page-subscribe">
+        <div class="subscribe-page">
+            <div class="subscribe-container">
+                <div class="section-header">
+                    <span class="section-badge-gold">💳 SUBSCRIPTION PLANS</span>
+                    <h2 class="section-title">Choose Your Plan</h2>
+                    <p class="section-description">
+                        Invest in quality bilingual education resources created by an experienced educator
+                    </p>
+                </div>
+
+                <div class="plans-grid">
+                    <div class="plan-card">
+                        <h3 class="plan-name">Starter</h3>
+                        <div class="plan-price">$9.99<span>/month</span></div>
+                        <p class="plan-billing">Billed monthly, cancel anytime</p>
+                        <ul class="plan-features">
+                            <li class="plan-feature"><span class="feature-check">✓</span>Access to 50+ bilingual worksheets</li>
+                            <li class="plan-feature"><span class="feature-check">✓</span>Monthly new resources</li>
+                            <li class="plan-feature"><span class="feature-check">✓</span>Email support</li>
+                            <li class="plan-feature"><span class="feature-check">✓</span>Print-ready PDFs</li>
+                        </ul>
+                        <p class="payment-label">Select Payment Method</p>
+                        <div class="payment-buttons">
+                            <button class="btn-payment btn-card" onclick="openPaymentModal('credit', 'Starter', 9.99)">💳 Card</button>
+                            <button class="btn-payment btn-venmo" onclick="openPaymentModal('venmo', 'Starter', 9.99)">Venmo</button>
+                            <button class="btn-payment btn-apple" onclick="openPaymentModal('apple', 'Starter', 9.99)"> Pay</button>
+                        </div>
+                    </div>
+
+                    <div class="plan-card popular">
+                        <div class="plan-popular-badge">⭐ MOST POPULAR</div>
+                        <h3 class="plan-name">Educator Pro</h3>
+                        <div class="plan-price">$19.99<span>/month</span></div>
+                        <p class="plan-billing">Billed monthly, cancel anytime</p>
+                        <ul class="plan-features">
+                            <li class="plan-feature"><span class="feature-check">✓</span>Access to ALL 500+ resources</li>
+                            <li class="plan-feature"><span class="feature-check">✓</span>Weekly new content</li>
+                            <li class="plan-feature"><span class="feature-check">✓</span>Priority support</li>
+                            <li class="plan-feature"><span class="feature-check">✓</span>Editable templates</li>
+                            <li class="plan-feature"><span class="feature-check">✓</span>Exclusive lesson plans</li>
+                            <li class="plan-feature"><span class="feature-check">✓</span>Video tutorials</li>
+                        </ul>
+                        <p class="payment-label">Select Payment Method</p>
+                        <div class="payment-buttons">
+                            <button class="btn-payment btn-card" onclick="openPaymentModal('credit', 'Educator Pro', 19.99)">💳 Card</button>
+                            <button class="btn-payment btn-venmo" onclick="openPaymentModal('venmo', 'Educator Pro', 19.99)">Venmo</button>
+                            <button class="btn-payment btn-apple" onclick="openPaymentModal('apple', 'Educator Pro', 19.99)"> Pay</button>
+                        </div>
+                    </div>
+
+                    <div class="plan-card">
+                        <h3 class="plan-name">School License</h3>
+                        <div class="plan-price">$49.99<span>/month</span></div>
+                        <p class="plan-billing">Billed monthly, cancel anytime</p>
+                        <ul class="plan-features">
+                            <li class="plan-feature"><span class="feature-check">✓</span>Unlimited staff access</li>
+                            <li class="plan-feature"><span class="feature-check">✓</span>Custom resource requests</li>
+                            <li class="plan-feature"><span class="feature-check">✓</span>Dedicated support line</li>
+                            <li class="plan-feature"><span class="feature-check">✓</span>Professional development</li>
+                            <li class="plan-feature"><span class="feature-check">✓</span>School-wide implementation</li>
+                            <li class="plan-feature"><span class="feature-check">✓</span>Annual curriculum planning</li>
+                        </ul>
+                        <p class="payment-label">Select Payment Method</p>
+                        <div class="payment-buttons">
+                            <button class="btn-payment btn-card" onclick="openPaymentModal('credit', 'School License', 49.99)">💳 Card</button>
+                            <button class="btn-payment btn-venmo" onclick="openPaymentModal('venmo', 'School License', 49.99)">Venmo</button>
+                            <button class="btn-payment btn-apple" onclick="openPaymentModal('apple', 'School License', 49.99)"> Pay</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trust-badges">
+                    <div class="trust-badge-item">
+                        <div class="trust-badge-icon">🔒</div>
+                        <div class="trust-badge-label">Secure Payment</div>
+                    </div>
+                    <div class="trust-badge-item">
+                        <div class="trust-badge-icon">↩️</div>
+                        <div class="trust-badge-label">30-Day Guarantee</div>
+                    </div>
+                    <div class="trust-badge-item">
+                        <div class="trust-badge-icon">🎓</div>
+                        <div class="trust-badge-label">Educator Created</div>
+                    </div>
+                    <div class="trust-badge-item">
+                        <div class="trust-badge-icon">💬</div>
+                        <div class="trust-badge-label">24/7 Support</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Page -->
+    <section class="page" id="page-about">
+        <div class="about-page">
+            <div class="about-hero">
+                <div class="about-hero-decoration">🐻</div>
+                <div class="about-hero-content">
+                    <span class="section-badge-gold">👩‍🏫 MEET THE EDUCATOR</span>
+                    <h1 class="about-title">Cathy Moss</h1>
+                    <p class="about-subtitle">Principal • Educator • UCLA Bruin</p>
+                </div>
+            </div>
+
+            <div class="about-content">
+                <div class="about-grid">
+                    <div>
+                        <div class="about-photo">
+                            <img src="https://resources.finalsite.net/images/f_auto,q_auto,t_image_size_1/v1745519383/gusdk12caus/tnmfsd0kwaea2vphrrh0/CathyMoss.jpg" alt="Cathy Moss">
+                        </div>
+                        <div class="about-stats">
+                            <div class="about-stat">
+                                <div class="about-stat-icon">🎓</div>
+                                <div>
+                                    <div class="about-stat-label">UCLA Graduate</div>
+                                    <div class="about-stat-value">Spanish Major</div>
+                                </div>
+                            </div>
+                            <div class="about-stat">
+                                <div class="about-stat-icon">📚</div>
+                                <div>
+                                    <div class="about-stat-label">Experience</div>
+                                    <div class="about-stat-value">30+ Years</div>
+                                </div>
+                            </div>
+                            <div class="about-stat">
+                                <div class="about-stat-icon">🏫</div>
+                                <div>
+                                    <div class="about-stat-label">Current Role</div>
+                                    <div class="about-stat-value">Principal</div>
+                                </div>
+                            </div>
+                            <div class="about-stat">
+                                <div class="about-stat-icon">🌎</div>
+                                <div>
+                                    <div class="about-stat-label">Languages</div>
+                                    <div class="about-stat-value">Fluent in Spanish</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-bio">
+                        <h2 class="about-bio-title">A Legacy of Educational Excellence</h2>
+                        
+                        <p>
+                            With over <strong>30 years of dedicated service</strong> in education, Cathy Moss has transformed the lives of countless students and educators throughout her remarkable career. A proud <strong>UCLA Bruin</strong> who majored in <strong>Spanish</strong>, she is fully fluent in both English and Spanish—bringing authentic bilingual expertise and the spirit of excellence to everything she does.
+                        </p>
+                        
+                        <p>
+                            Currently serving as <strong>Principal at Rod Kelley Elementary School</strong>, Mrs. Moss leads with passion, vision, and an unwavering commitment to student success. Her leadership has created a nurturing environment where both English and Spanish-speaking students thrive academically and personally.
+                        </p>
+
+                        <p>
+                            Her foundation in <strong>Spanish language and culture</strong> from UCLA gives her a unique perspective on bilingual education. Unlike educators who learn Spanish as a second language later in their careers, Mrs. Moss's deep academic study of the language allows her to create resources that are linguistically authentic and culturally meaningful.
+                        </p>
+                        
+                        <p>
+                            Prior to her current role, she served as <strong>Vice Principal at San Martin Gwinn Elementary School</strong>, where she honed her administrative skills and developed innovative approaches to dual-language instruction that continue to influence her work today.
+                        </p>
+
+                        <div class="about-quote">
+                            <p>"Every child deserves access to quality bilingual education. Language is not just a skill—it's a bridge to culture, identity, and endless opportunities."</p>
+                            <cite>— Cathy Moss</cite>
+                        </div>
+
+                        <p>
+                            Through <strong>A Bilingual Bruin</strong>, Mrs. Moss shares her wealth of knowledge, proven strategies, and carefully crafted resources with educators everywhere. Each resource reflects her deep understanding of dual-language pedagogy and her commitment to culturally responsive teaching.
+                        </p>
+
+                        <h3 class="expertise-title">Areas of Expertise</h3>
+                        
+                        <div class="expertise-grid">
+                            <div class="expertise-item">
+                                <span class="expertise-check">✓</span>
+                                <span>Dual Language Immersion</span>
+                            </div>
+                            <div class="expertise-item">
+                                <span class="expertise-check">✓</span>
+                                <span>Bilingual Curriculum Design</span>
+                            </div>
+                            <div class="expertise-item">
+                                <span class="expertise-check">✓</span>
+                                <span>School Leadership</span>
+                            </div>
+                            <div class="expertise-item">
+                                <span class="expertise-check">✓</span>
+                                <span>Teacher Professional Development</span>
+                            </div>
+                            <div class="expertise-item">
+                                <span class="expertise-check">✓</span>
+                                <span>Culturally Responsive Pedagogy</span>
+                            </div>
+                            <div class="expertise-item">
+                                <span class="expertise-check">✓</span>
+                                <span>English Language Development</span>
+                            </div>
+                            <div class="expertise-item">
+                                <span class="expertise-check">✓</span>
+                                <span>Spanish Language Arts</span>
+                            </div>
+                            <div class="expertise-item">
+                                <span class="expertise-check">✓</span>
+                                <span>Family Engagement Strategies</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-cta">
+                <h2>Ready to Transform Your Classroom?</h2>
+                <p>Join thousands of educators using A Bilingual Bruin resources to create engaging, culturally rich learning experiences.</p>
+                <button class="btn-dark" onclick="showPage('subscribe')">Start Your Subscription Today</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <div class="footer-brand">
+                    <img src="https://i.imgur.com/Dykfgx4.png" alt="Logo" class="footer-logo">
+                    <div>
+                        <div class="footer-brand-name">A Bilingual Bruin</div>
+                        <div class="footer-brand-sub">UCLA Proud 🐻</div>
+                    </div>
+                </div>
+                <p class="footer-description">Quality bilingual education resources created by an educator with 30+ years of experience.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Quick Links</h4>
+                <button class="footer-link" onclick="showPage('home')">Home</button>
+                <button class="footer-link" onclick="showPage('resources')">Resources</button>
+                <button class="footer-link" onclick="showPage('subscribe')">Subscribe</button>
+                <button class="footer-link" onclick="showPage('about')">About</button>
+            </div>
+            <div>
+                <h4 class="footer-title">Resources</h4>
+                <span class="footer-link">Math</span>
+                <span class="footer-link">Reading/ELA</span>
+                <span class="footer-link">Science</span>
+                <span class="footer-link">Social Studies</span>
+            </div>
+            <div>
+                <h4 class="footer-title">Contact</h4>
+                <p class="footer-contact">📧 contact@abilingualbruin.com</p>
+                <p class="footer-contact">📍 California, USA</p>
+                <div class="footer-social">
+                    <div class="social-icon">📘</div>
+                    <div class="social-icon">📸</div>
+                    <div class="social-icon">🐦</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2024 A Bilingual Bruin. All rights reserved. | Made with 💛💙 in California
+        </div>
+    </footer>
+
+    <!-- Payment Modal -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-content" id="modalContent">
+            <!-- Content will be injected by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Current state
+        let currentPlan = { name: '', price: 0 };
+        let selectedCardType = '';
+
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Page navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById('page-' + pageName).classList.add('active');
+            
+            // Update nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === pageName) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Payment Modal Functions
+        function openPaymentModal(type, planName, planPrice) {
+            currentPlan = { name: planName, price: planPrice };
+            selectedCardType = '';
+            
+            const modal = document.getElementById('paymentModal');
+            const content = document.getElementById('modalContent');
+            
+            if (type === 'credit') {
+                content.innerHTML = getCreditCardHTML();
+            } else if (type === 'venmo') {
+                content.innerHTML = getVenmoHTML();
+            } else if (type === 'apple') {
+                content.innerHTML = getApplePayHTML();
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        function selectCardType(type) {
+            selectedCardType = type;
+            document.getElementById('modalContent').innerHTML = getCreditCardFormHTML();
+        }
+
+        function changeCardType() {
+            selectedCardType = '';
+            document.getElementById('modalContent').innerHTML = getCreditCardHTML();
+        }
+
+        function submitPayment(e) {
+            e.preventDefault();
+            document.getElementById('modalContent').innerHTML = get2FAHTML();
+        }
+
+        function select2FA(method) {
+            document.getElementById('modalContent').innerHTML = getProcessingHTML();
+            
+            setTimeout(() => {
+                document.getElementById('modalContent').innerHTML = getAlmostThereHTML();
+            }, 2000);
+            
+            setTimeout(() => {
+                document.getElementById('modalContent').innerHTML = getSuccessHTML();
+            }, 4000);
+        }
+
+        // HTML Templates
+        function getCreditCardHTML() {
+            return `
+                <button class="modal-close" onclick="closeModal()">×</button>
+                <div class="modal-header">
+                    <h2 class="modal-title">Credit Card Payment</h2>
+                    <p class="modal-subtitle">${currentPlan.name} - $${currentPlan.price}/month</p>
+                </div>
+                <p class="payment-label">Select Your Card Type</p>
+                <div class="card-options">
+                    <div class="card-option" onclick="selectCardType('Visa')">
+                        <div class="card-option-icon">💳</div>
+                        <span>Visa</span>
+                    </div>
+                    <div class="card-option" onclick="selectCardType('Mastercard')">
+                        <div class="card-option-icon">🔴</div>
+                        <span>Mastercard</span>
+                    </div>
+                    <div class="card-option" onclick="selectCardType('American Express')">
+                        <div class="card-option-icon">💠</div>
+                        <span>American Express</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getCreditCardFormHTML() {
+            return `
+                <button class="modal-close" onclick="closeModal()">×</button>
+                <div class="modal-header">
+                    <h2 class="modal-title">Credit Card Payment</h2>
+                    <p class="modal-subtitle">${currentPlan.name} - $${currentPlan.price}/month</p>
+                </div>
+                <div class="selected-card">
+                    <span>${selectedCardType}</span>
+                    <button onclick="changeCardType()">Change</button>
+                </div>
+                <form onsubmit="submitPayment(event)">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" placeholder="John Doe" required>
+                    
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" placeholder="john@example.com" required>
+                    
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" class="form-input" placeholder="(555) 123-4567" required>
+                    
+                    <label class="form-label">Card Number</label>
+                    <input type="text" class="form-input" placeholder="1234 5678 9012 3456" required>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label class="form-label">Expiry Date</label>
+                            <input type="text" class="form-input" placeholder="MM/YY" required>
+                        </div>
+                        <div>
+                            <label class="form-label">CVV</label>
+                            <input type="text" class="form-input" placeholder="123" required>
+                        </div>
+                    </div>
+                    
+                    <label class="form-label">Billing Address</label>
+                    <input type="text" class="form-input" placeholder="123 Main Street" required>
+                    
+                    <div class="form-row">
+                        <div class="flex-2">
+                            <label class="form-label">City</label>
+                            <input type="text" class="form-input" placeholder="Los Angeles" required>
+                        </div>
+                        <div>
+                            <label class="form-label">State</label>
+                            <input type="text" class="form-input" placeholder="CA" required>
+                        </div>
+                        <div>
+                            <label class="form-label">ZIP</label>
+                            <input type="text" class="form-input" placeholder="90024" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-form blue">Continue to Verification</button>
+                </form>
+            `;
+        }
+
+        function getVenmoHTML() {
+            return `
+                <button class="modal-close" onclick="closeModal()">×</button>
+                <div class="modal-header">
+                    <div class="modal-icon venmo" style="color: white; font-weight: bold; font-size: 24px;">V</div>
+                    <h2 class="modal-title">Pay with Venmo</h2>
+                    <p class="modal-subtitle">${currentPlan.name} - $${currentPlan.price}/month</p>
+                </div>
+                <form onsubmit="submitPayment(event)">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" placeholder="John Doe" required>
+                    
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" placeholder="john@example.com" required>
+                    
+                    <label class="form-label">Phone Number (linked to Venmo)</label>
+                    <input type="tel" class="form-input" placeholder="(555) 123-4567" required>
+                    
+                    <label class="form-label">Venmo Username</label>
+                    <input type="text" class="form-input" placeholder="@your-venmo-username" required>
+                    
+                    <div class="form-info">
+                        <p>ℹ️ You'll receive a Venmo payment request after verification. Please ensure your Venmo account is active and has sufficient funds or a linked payment method.</p>
+                    </div>
+                    
+                    <button type="submit" class="btn-form venmo">Continue to Verification</button>
+                </form>
+            `;
+        }
+
+        function getApplePayHTML() {
+            return `
+                <button class="modal-close" onclick="closeModal()">×</button>
+                <div class="modal-header">
+                    <div class="modal-icon black" style="color: white; font-size: 30px;"></div>
+                    <h2 class="modal-title">Pay with Apple Pay</h2>
+                    <p class="modal-subtitle">${currentPlan.name} - $${currentPlan.price}/month</p>
+                </div>
+                <form onsubmit="submitPayment(event)">
+                    <label class="form-label">Full Name (as on Apple ID)</label>
+                    <input type="text" class="form-input" placeholder="John Doe" required>
+                    
+                    <label class="form-label">Apple ID Email</label>
+                    <input type="email" class="form-input" placeholder="john@icloud.com" required>
+                    
+                    <label class="form-label">Phone Number (linked to Apple ID)</label>
+                    <input type="tel" class="form-input" placeholder="(555) 123-4567" required>
+                    
+                    <label class="form-label">Billing Address</label>
+                    <input type="text" class="form-input" placeholder="123 Main Street" required>
+                    
+                    <div class="form-row">
+                        <div class="flex-2">
+                            <label class="form-label">City</label>
+                            <input type="text" class="form-input" placeholder="Los Angeles" required>
+                        </div>
+                        <div>
+                            <label class="form-label">State</label>
+                            <input type="text" class="form-input" placeholder="CA" required>
+                        </div>
+                        <div>
+                            <label class="form-label">ZIP</label>
+                            <input type="text" class="form-input" placeholder="90024" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-info dark">
+                        <p>ℹ️ After verification, you'll receive an Apple Pay prompt on your device. Please have your iPhone, iPad, or Mac ready to confirm with Face ID, Touch ID, or passcode.</p>
+                    </div>
+                    
+                    <button type="submit" class="btn-form black">Continue to Verification</button>
+                </form>
+            `;
+        }
+
+        function get2FAHTML() {
+            return `
+                <button class="modal-close" onclick="closeModal()">×</button>
+                <div class="modal-header">
+                    <div class="modal-icon blue">🔐</div>
+                    <h2 class="modal-title">Set Up 2-Factor Authentication</h2>
+                    <p class="modal-subtitle">For your security, please choose your preferred authentication method</p>
+                </div>
+                <div class="twofa-options">
+                    <div class="twofa-option" onclick="select2FA('phone')">
+                        <div class="twofa-option-icon">📱</div>
+                        <h3>Phone Text</h3>
+                        <p>Receive a code via SMS</p>
+                    </div>
+                    <div class="twofa-option" onclick="select2FA('email')">
+                        <div class="twofa-option-icon">📧</div>
+                        <h3>Email</h3>
+                        <p>Receive a code via email</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getProcessingHTML() {
+            return `
+                <div class="processing-content">
+                    <div class="spinner"></div>
+                    <h2>Processing Payment Information</h2>
+                    <p>Please wait while we securely process your payment...</p>
+                </div>
+            `;
+        }
+
+        function getAlmostThereHTML() {
+            return `
+                <div class="processing-content">
+                    <div class="almost-emoji">🐻</div>
+                    <h2>Hold on...</h2>
+                    <p class="almost-highlight">You are moments away from supporting A Bilingual Bruin! 💛💙</p>
+                </div>
+            `;
+        }
+
+        function getSuccessHTML() {
+            return `
+                <div class="processing-content">
+                    <div class="success-icon"><span>✓</span></div>
+                    <h2>Welcome to A Bilingual Bruin!</h2>
+                    <p>Thank you for your subscription! Check your email for confirmation.</p>
+                    <button class="btn-form blue" onclick="closeModal(); showPage('resources');">Start Exploring Resources</button>
+                </div>
+            `;
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
