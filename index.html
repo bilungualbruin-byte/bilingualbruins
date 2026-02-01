@@ -86,12 +86,12 @@
         }
 
         .nav-logo {
-            height: 60px;
+            height: 80px;
             width: auto;
         }
 
         .nav-title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 800;
             color: var(--white);
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -104,7 +104,7 @@
         }
 
         .nav-subtitle {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--ucla-gold);
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -860,6 +860,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center 15%;
         }
 
         .about-stats {
@@ -1054,7 +1055,7 @@
         }
 
         .footer-logo {
-            height: 50px;
+            height: 70px;
             width: auto;
         }
 
@@ -1447,6 +1448,130 @@
         }
 
         /* Responsive */
+        /* Testimonial Carousel */
+        .testimonial-section {
+            background: linear-gradient(135deg, var(--ucla-gold) 0%, var(--light-gold) 100%);
+            padding: 50px 0;
+            overflow: hidden;
+        }
+
+        .testimonial-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .testimonial-header span {
+            background-color: var(--dark-blue);
+            color: var(--ucla-gold);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-carousel {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .testimonial-carousel::before,
+        .testimonial-carousel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .testimonial-carousel::before {
+            left: 0;
+            background: linear-gradient(to right, rgba(255,225,102,1) 0%, rgba(255,225,102,0) 100%);
+        }
+
+        .testimonial-carousel::after {
+            right: 0;
+            background: linear-gradient(to left, rgba(255,225,102,1) 0%, rgba(255,225,102,0) 100%);
+        }
+
+        .testimonial-track {
+            display: flex;
+            gap: 30px;
+            animation: scroll 40s linear infinite;
+            width: max-content;
+        }
+
+        .testimonial-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .testimonial-card {
+            background-color: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            min-width: 380px;
+            max-width: 380px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial-stars {
+            color: var(--ucla-gold);
+            font-size: 20px;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+
+        .testimonial-text {
+            font-size: 16px;
+            color: var(--dark-blue);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--ucla-blue) 0%, var(--dark-blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .testimonial-author strong {
+            display: block;
+            color: var(--dark-blue);
+            font-size: 16px;
+        }
+
+        .testimonial-author span {
+            font-size: 13px;
+            color: #666;
+        }
+
         @media (max-width: 1024px) {
             .hero-container {
                 grid-template-columns: 1fr;
@@ -1527,7 +1652,7 @@
     <nav class="nav" id="nav">
         <div class="nav-content">
             <a class="nav-brand" onclick="showPage('home')">
-                <img src="https://i.imgur.com/Dykfgx4.png" alt="A Bilingual Bruin Logo" class="nav-logo">
+                <img src="https://i.imgur.com/HqlDJO0.png" alt="A Bilingual Bruin Logo" class="nav-logo">
                 <div>
                     <div class="nav-title">A Bilingual Bruin</div>
                     <div class="nav-subtitle">Dual Language Resources</div>
@@ -1564,9 +1689,9 @@
                         <span class="hero-title-highlight">Brilliantly Delivered</span>
                     </h1>
                     <p class="hero-description">
-                        30+ years of educational excellence from a UCLA Spanish major, packed into ready-to-use 
-                        dual language resources. Empower your students with culturally rich, academically rigorous 
-                        curriculum materials created by a fluent Spanish speaker.
+                        Over two decades of educational excellence from a UCLA graduate with dual master's degrees, 
+                        packed into ready-to-use dual language resources. Empower your students with culturally rich, 
+                        academically rigorous curriculum materials created by an award-winning educator fluent in Spanish.
                     </p>
                     <div class="hero-buttons">
                         <button class="btn-primary" onclick="showPage('resources')">Explore Resources</button>
@@ -1581,7 +1706,7 @@
                                 <div class="stat-label">Resources</div>
                             </div>
                             <div class="stat-box">
-                                <div class="stat-number">30+</div>
+                                <div class="stat-number">20+</div>
                                 <div class="stat-label">Years Experience</div>
                             </div>
                             <div class="stat-box">
@@ -1589,8 +1714,8 @@
                                 <div class="stat-label">Students Impacted</div>
                             </div>
                             <div class="stat-box">
-                                <div class="stat-number">100%</div>
-                                <div class="stat-label">Bilingual</div>
+                                <div class="stat-number">2004</div>
+                                <div class="stat-label">Teacher of the Year</div>
                             </div>
                         </div>
                         <div class="trust-badge">
@@ -1615,7 +1740,7 @@
                     <span class="section-badge">📚 RESOURCE LIBRARY</span>
                     <h2 class="section-title">Bilingual Teaching Resources</h2>
                     <p class="section-description">
-                        Carefully crafted dual language materials designed by an educator with 30+ years of experience
+                        Carefully crafted dual language materials designed by an award-winning educator with over two decades of classroom experience
                     </p>
                 </div>
 
@@ -1765,7 +1890,7 @@
                     <span class="section-badge-gold">💳 SUBSCRIPTION PLANS</span>
                     <h2 class="section-title">Choose Your Plan</h2>
                     <p class="section-description">
-                        Invest in quality bilingual education resources created by an experienced educator
+                        Invest in quality bilingual education resources created by an award-winning educator
                     </p>
                 </div>
 
@@ -1860,7 +1985,7 @@
                 <div class="about-hero-content">
                     <span class="section-badge-gold">👩‍🏫 MEET THE EDUCATOR</span>
                     <h1 class="about-title">Cathy Moss</h1>
-                    <p class="about-subtitle">Principal • Educator • UCLA Bruin</p>
+                    <p class="about-subtitle">Principal • Educator • UCLA Bruin • 2004 Teacher of the Year</p>
                 </div>
             </div>
 
@@ -1875,14 +2000,14 @@
                                 <div class="about-stat-icon">🎓</div>
                                 <div>
                                     <div class="about-stat-label">UCLA Graduate</div>
-                                    <div class="about-stat-value">Spanish Major</div>
+                                    <div class="about-stat-value">B.A. Spanish & Linguistics</div>
                                 </div>
                             </div>
                             <div class="about-stat">
                                 <div class="about-stat-icon">📚</div>
                                 <div>
-                                    <div class="about-stat-label">Experience</div>
-                                    <div class="about-stat-value">30+ Years</div>
+                                    <div class="about-stat-label">Advanced Degrees</div>
+                                    <div class="about-stat-value">M.A. & M.Ed.</div>
                                 </div>
                             </div>
                             <div class="about-stat">
@@ -1893,10 +2018,10 @@
                                 </div>
                             </div>
                             <div class="about-stat">
-                                <div class="about-stat-icon">🌎</div>
+                                <div class="about-stat-icon">🏆</div>
                                 <div>
-                                    <div class="about-stat-label">Languages</div>
-                                    <div class="about-stat-value">Fluent in Spanish</div>
+                                    <div class="about-stat-label">Recognition</div>
+                                    <div class="about-stat-value">2004 Teacher of the Year</div>
                                 </div>
                             </div>
                         </div>
@@ -1906,25 +2031,33 @@
                         <h2 class="about-bio-title">A Legacy of Educational Excellence</h2>
                         
                         <p>
-                            With over <strong>30 years of dedicated service</strong> in education, Cathy Moss has transformed the lives of countless students and educators throughout her remarkable career. A proud <strong>UCLA Bruin</strong> who majored in <strong>Spanish</strong>, she is fully fluent in both English and Spanish—bringing authentic bilingual expertise and the spirit of excellence to everything she does.
+                            Cathy Moss is an experienced and dedicated educator with <strong>over two decades of service</strong> in public education. She currently serves as <strong>Principal at Rod Kelley Elementary School</strong> and previously served as <strong>Assistant Principal at San Martin Gwinn Elementary</strong>, home of the Dual Immersion Multicultural Education (DIME) program, in the Morgan Hill Unified School District.
                         </p>
                         
                         <p>
-                            Currently serving as <strong>Principal at Rod Kelley Elementary School</strong>, Mrs. Moss leads with passion, vision, and an unwavering commitment to student success. Her leadership has created a nurturing environment where both English and Spanish-speaking students thrive academically and personally.
+                            Her diverse career includes serving as an <strong>ELA/ELD Core Curriculum Teacher on Special Assignment (TOSA)</strong> and teaching <strong>Spanish at Live Oak High School</strong>. Her teaching career began in <strong>bilingual kindergarten</strong> in the Santa Monica-Malibu Unified School District, before teaching in the <strong>Los Altos School District for 20 years</strong>, where she taught 1st through 5th grades.
                         </p>
 
                         <p>
-                            Her foundation in <strong>Spanish language and culture</strong> from UCLA gives her a unique perspective on bilingual education. Unlike educators who learn Spanish as a second language later in their careers, Mrs. Moss's deep academic study of the language allows her to create resources that are linguistically authentic and culturally meaningful.
+                            During her time in Los Altos, she was honored as the <strong>2004 Teacher of the Year</strong> and served as <strong>President of the Los Altos Teachers Association</strong>. She is deeply committed to fostering inclusive, high-quality education for all students.
                         </p>
                         
                         <p>
-                            Prior to her current role, she served as <strong>Vice Principal at San Martin Gwinn Elementary School</strong>, where she honed her administrative skills and developed innovative approaches to dual-language instruction that continue to influence her work today.
+                            Cathy holds a <strong>Master of Arts in Educational Administration from San José State University</strong> and a <strong>Master of Education from UCLA</strong>, where she also earned her <strong>B.A. in Spanish and Linguistics with departmental honors</strong>. A proud alumna of Live Oak High School in Morgan Hill, she was a member of the <strong>Emerald Regime marching band</strong>.
+                        </p>
+
+                        <p>
+                            Fluent in Spanish and passionate about multicultural education, Cathy has participated in <strong>study abroad programs in Spain and Mexico</strong>. She is a graduate of <strong>Leadership Morgan Hill Class of 2017</strong>.
                         </p>
 
                         <div class="about-quote">
                             <p>"Every child deserves access to quality bilingual education. Language is not just a skill—it's a bridge to culture, identity, and endless opportunities."</p>
                             <cite>— Cathy Moss</cite>
                         </div>
+
+                        <p>
+                            Outside of work, Cathy enjoys family life with her husband, who works in finance, and their two high school-aged sons. She finds joy in music and sports through her sons' activities, and in her free time, she enjoys <strong>hiking, reading, traveling, visiting family on the East Coast, and fostering cats and kittens</strong>. Education runs deep in her family—her mother and both grandmothers were lifelong teachers.
+                        </p>
 
                         <p>
                             Through <strong>A Bilingual Bruin</strong>, Mrs. Moss shares her wealth of knowledge, proven strategies, and carefully crafted resources with educators everywhere. Each resource reflects her deep understanding of dual-language pedagogy and her commitment to culturally responsive teaching.
@@ -1935,7 +2068,7 @@
                         <div class="expertise-grid">
                             <div class="expertise-item">
                                 <span class="expertise-check">✓</span>
-                                <span>Dual Language Immersion</span>
+                                <span>Dual Language Immersion (DIME)</span>
                             </div>
                             <div class="expertise-item">
                                 <span class="expertise-check">✓</span>
@@ -1943,11 +2076,11 @@
                             </div>
                             <div class="expertise-item">
                                 <span class="expertise-check">✓</span>
-                                <span>School Leadership</span>
+                                <span>School Leadership & Administration</span>
                             </div>
                             <div class="expertise-item">
                                 <span class="expertise-check">✓</span>
-                                <span>Teacher Professional Development</span>
+                                <span>ELA/ELD Instruction</span>
                             </div>
                             <div class="expertise-item">
                                 <span class="expertise-check">✓</span>
@@ -1963,7 +2096,7 @@
                             </div>
                             <div class="expertise-item">
                                 <span class="expertise-check">✓</span>
-                                <span>Family Engagement Strategies</span>
+                                <span>K-5 Elementary Education</span>
                             </div>
                         </div>
                     </div>
@@ -1983,13 +2116,13 @@
         <div class="footer-content">
             <div>
                 <div class="footer-brand">
-                    <img src="https://i.imgur.com/Dykfgx4.png" alt="Logo" class="footer-logo">
+                    <img src="https://i.imgur.com/HqlDJO0.png" alt="Logo" class="footer-logo">
                     <div>
                         <div class="footer-brand-name">A Bilingual Bruin</div>
                         <div class="footer-brand-sub">UCLA Proud 🐻</div>
                     </div>
                 </div>
-                <p class="footer-description">Quality bilingual education resources created by an educator with 30+ years of experience.</p>
+                <p class="footer-description">Quality bilingual education resources created by an award-winning educator with over two decades of experience.</p>
             </div>
             <div>
                 <h4 class="footer-title">Quick Links</h4>
@@ -2008,7 +2141,7 @@
             <div>
                 <h4 class="footer-title">Contact</h4>
                 <p class="footer-contact">📧 contact@abilingualbruin.com</p>
-                <p class="footer-contact">📍 California, USA</p>
+                <p class="footer-contact">📍 Morgan Hill, California</p>
                 <div class="footer-social">
                     <div class="social-icon">📘</div>
                     <div class="social-icon">📸</div>
